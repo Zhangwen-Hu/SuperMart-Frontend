@@ -1,0 +1,49 @@
+<div class="product-detail-container">
+  <div class="product-header">
+    <button mat-button color="primary" [routerLink]="['/products']">
+      <mat-icon>arrow_back</mat-icon> Back to Products
+    </button>
+    <h1>Product Details</h1>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <p>Loading product details...</p>
+  </div>
+
+  <div *ngIf="!isLoading && product" class="product-content">
+    <div class="product-info">
+      <h2>{{ product.name }}</h2>
+      <p class="price">${{ product.retailPrice.toFixed(2) }}</p>
+      <p class="stock">
+        Quantity: {{ product.quantity }}
+      </p>
+      <p class="wholesale-price" *ngIf="isAdmin">Wholesale Price: ${{ product.wholesalePrice.toFixed(2) }}</p>
+      <p class="description">{{ product.description }}</p>
+
+      <div class="actions" *ngIf="!isAdmin && product.quantity > 0">
+        <div class="quantity-selector">
+          <button mat-icon-button (click)="decreaseQuantity()">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="quantity">{{ quantity }}</span>
+          <button mat-icon-button (click)="increaseQuantity()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <button mat-raised-button color="accent" (click)="addToCart()">
+          <mat-icon>shopping_cart</mat-icon> Add to Cart
+        </button>
+        <button mat-raised-button color="warn" (click)="addToWatchlist()">
+          <mat-icon>bookmark</mat-icon> Add to Watchlist
+        </button>
+      </div>
+
+      <div class="admin-actions" *ngIf="isAdmin">
+        <button mat-raised-button color="primary" [routerLink]="['/admin-products']" [queryParams]="{edit: product.id}">
+          <mat-icon>edit</mat-icon> Edit Product
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 

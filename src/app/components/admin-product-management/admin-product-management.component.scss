@@ -1,0 +1,69 @@
+.admin-product-management-container {
+  padding: 20px;
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+}
+
+.product-form-section {
+  margin-bottom: 40px;
+  
+  mat-card-content {
+    padding: 16px;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 15px;
+  
+  .form-field {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.table-container {
+  overflow-x: auto;
+  
+  table {
+    width: 100%;
+  }
+  
+  .in-stock {
+    color: #4caf50;
+    font-weight: 500;
+  }
+  
+  .out-of-stock {
+    color: #f44336;
+    font-weight: 500;
+  }
+} 

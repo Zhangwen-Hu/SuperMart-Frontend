@@ -1,0 +1,82 @@
+.admin-order-management-container {
+  padding: 20px;
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+}
+
+.filters-bar {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  
+  mat-form-field {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+.status-filters {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  
+  button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    
+    &.active {
+      background-color: rgba(0, 0, 0, 0.05);
+      font-weight: 500;
+    }
+  }
+}
+
+.loading-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.orders-table-container {
+  width: 100%;
+  overflow: auto;
+  
+  table {
+    width: 100%;
+  }
+}
+
+.status-pending {
+  color: #ff9800;
+  font-weight: 500;
+}
+
+.status-processing {
+  color: #2196f3;
+  font-weight: 500;
+}
+
+.status-completed {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.status-canceled {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.no-orders {
+  text-align: center;
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-top: 20px;
+  
+  p {
+    color: #777;
+    font-size: 1.1rem;
+  }
+} 

@@ -1,0 +1,76 @@
+<div class="cart-container">
+  <h1>Your Shopping Cart</h1>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <p>Your cart is empty.</p>
+    <button mat-raised-button color="primary" routerLink="/products">
+      <mat-icon>shopping_bag</mat-icon> Continue Shopping
+    </button>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-content">
+    <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
+      <!-- Product Name Column -->
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef>Product</th>
+        <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let item">${{ (item.price || 0).toFixed(2) }}</td>
+      </ng-container>
+
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let item">
+          <mat-form-field appearance="outline" class="quantity-field">
+            <input matInput type="number" [value]="item.quantity" min="1" (change)="updateQuantity(item, $event)">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- Subtotal Column -->
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+        <td mat-cell *matCellDef="let item">${{ getSubtotal(item).toFixed(2) }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-icon-button color="warn" (click)="removeItem(item.productId)" matTooltip="Remove Item">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="cart-summary">
+      <div class="summary-content">
+        <div class="total-section">
+          <span class="total-label">Total:</span>
+          <span class="total-amount">${{ getTotal().toFixed(2) }}</span>
+        </div>
+        <div class="cart-actions">
+          <button mat-raised-button color="warn" (click)="clearCart()">
+            <mat-icon>remove_shopping_cart</mat-icon> Clear Cart
+          </button>
+          <button mat-raised-button color="primary" routerLink="/products">
+            <mat-icon>shopping_bag</mat-icon> Continue Shopping
+          </button>
+          <button mat-raised-button color="accent" (click)="checkout()" [disabled]="isProcessing">
+            <mat-icon>shopping_cart_checkout</mat-icon> 
+            {{ isProcessing ? 'Processing...' : 'Checkout' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

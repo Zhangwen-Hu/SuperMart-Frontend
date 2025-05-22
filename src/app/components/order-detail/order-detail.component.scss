@@ -1,0 +1,79 @@
+.order-detail-container {
+  padding: 20px;
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  button {
+    margin-right: 20px;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+}
+
+.loading-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.order-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.order-info {
+  mat-card-content {
+    padding: 16px;
+  }
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 10px;
+  
+  .info-label {
+    font-weight: 500;
+    min-width: 120px;
+  }
+  
+  .total-amount {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+}
+
+.status-pending {
+  color: #ff9800;
+  font-weight: 500;
+}
+
+.status-completed {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.status-canceled {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.order-items {
+  h2 {
+    margin-bottom: 15px;
+  }
+  
+  table {
+    width: 100%;
+  }
+}

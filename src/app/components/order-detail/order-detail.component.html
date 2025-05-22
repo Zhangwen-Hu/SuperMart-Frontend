@@ -1,0 +1,100 @@
+<div class="order-detail-container">
+  <div class="order-header">
+    <button mat-button color="primary" [routerLink]="[isAdmin ? '/admin-orders' : '/user-home']">
+      <mat-icon>arrow_back</mat-icon> Back to Orders
+    </button>
+    <h1>Order Details</h1>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <p>Loading order details...</p>
+  </div>
+
+  <div *ngIf="!isLoading && order" class="order-content">
+    <div class="order-info">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Order #{{ order.id }}</mat-card-title>
+          <mat-card-subtitle>{{ order.createdAt | date: 'medium' }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-row">
+            <span class="info-label">Status:</span>
+            <span [ngClass]="{
+              'status-pending': order.status === 'PENDING', 
+              'status-processing': order.status === 'PROCESSING',
+              'status-completed': order.status === 'COMPLETED',
+              'status-canceled': order.status === 'CANCELED'
+            }">
+              {{ order.status }}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Customer:</span>
+            <span>{{ order.user?.username || 'Unknown' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Total Amount:</span>
+            <span class="total-amount">${{ order.totalAmount.toFixed(2) }}</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="warn" *ngIf="order.status === 'PROCESSING'" (click)="cancelOrder()">
+            Cancel Order
+          </button>
+          <button mat-raised-button color="primary" *ngIf="order.status === 'PENDING' || order.status === 'PROCESSING' && isAdmin" (click)="completeOrder()">
+            Complete Order
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="order-items">
+      <h2>Order Items</h2>
+      <table mat-table [dataSource]="order.items" class="mat-elevation-z8">
+        <!-- Product ID Column -->
+        <ng-container matColumnDef="productId">
+          <th mat-header-cell *matHeaderCellDef>Product ID</th>
+          <td mat-cell *matCellDef="let item">{{ item.productId || item.product?.id }}</td>
+        </ng-container>
+
+        <!-- Product Name Column -->
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
+        </ng-container>
+
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+          <td mat-cell *matCellDef="let item">${{ (item.price || 0).toFixed(2) }}</td>
+        </ng-container>
+
+        <!-- Subtotal Column -->
+        <ng-container matColumnDef="subtotal">
+          <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+          <td mat-cell *matCellDef="let item">${{ getSubtotal(item).toFixed(2) }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" [routerLink]="['/product', item.productId || item.product?.id]">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div> 
